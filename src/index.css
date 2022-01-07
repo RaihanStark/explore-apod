@@ -82,4 +82,8 @@ button.apod-card:hover {
   .apod-header_right {
     flex-direction: column;
   }
+
+  .apod-container {
+    margin: auto 1rem 1rem 1rem;
+  }
 }
