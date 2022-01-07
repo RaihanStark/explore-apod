@@ -59,6 +59,7 @@ h1.header-title {
 .apod-header_right {
   display: flex;
   column-gap: 1rem;
+  row-gap: 1rem;
 }
 
 .apod-header {
@@ -74,4 +75,11 @@ h1.header-title {
 
 button.apod-card:hover {
   color: #c3aa6b;
+}
+@media (max-width: 680px) {
+  .apod-header,
+  .apod-header_left,
+  .apod-header_right {
+    flex-direction: column;
+  }
 }
