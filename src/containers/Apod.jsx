@@ -1,6 +1,14 @@
-function Apod({ title, thumbnail, copyright, date, explanation }) {
+function Apod({
+  title,
+  thumbnail,
+  imageHd,
+  copyright,
+  date,
+  explanation,
+  refreshApodHandler,
+}) {
   const downloadHandler = () => {
-    window.open(thumbnail, "_blank"); //to open new page
+    window.open(imageHd, "_blank"); //to open new page
   };
 
   return (
@@ -20,10 +28,11 @@ function Apod({ title, thumbnail, copyright, date, explanation }) {
             </div>
           </div>
           <div className="apod-header_right">
-            <button className="btn apod-card">Randomize</button>
-            <button className="btn apod-card">Share</button>
+            <button className="btn apod-card" onClick={refreshApodHandler}>
+              Random Picture
+            </button>
             <button className="btn apod-card" onClick={downloadHandler}>
-              Download
+              Download HD
             </button>
           </div>
         </div>

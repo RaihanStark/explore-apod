@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { getApod } from "./services/apodService";
+import { getApod, getRandomApod } from "./services/apodService";
 
 import Header from "./containers/Header";
 import Apod from "./containers/Apod";
@@ -9,16 +9,29 @@ function App() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [notAvailable, setNotAvailable] = useState(false);
+
   useEffect(() => {
-    getApod().then((response) => {
-      if (response.data.media_type !== "image") {
+    getApod().then((apodData) => {
+      if (apodData.media_type !== "image") {
         setNotAvailable(true);
         return;
       }
-      setData(response.data);
+      setData(apodData);
       setLoading(false);
     });
   }, []);
+
+  const refreshApodHandler = () => {
+    setData({ ...data, url: "" });
+    setLoading(true);
+    getRandomApod().then((apodData) => {
+      if (apodData.media_type !== "image") {
+        return getRandomApod();
+      }
+      setData(apodData);
+      setLoading(false);
+    });
+  };
 
   return (
     <>
@@ -32,10 +45,12 @@ function App() {
       ) : (
         <Apod
           title={data.title}
-          thumbnail={data.hdurl || data.url}
-          copyright={data.copyright}
+          thumbnail={data.url}
+          imageHd={data.hdurl}
+          copyright={data.copyright || "NASA"}
           date={data.date.replaceAll("-", ".")}
           explanation={data.explanation}
+          refreshApodHandler={refreshApodHandler}
         />
       )}
     </>
