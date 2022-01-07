@@ -24,7 +24,7 @@ function Apod({
               <span className="text-primary">Copyright:</span> {copyright}
             </div>
             <div className="apod-card apod-date">
-              <span className="text-primary">DATE:</span> {date}
+              <span className="text-primary">Date:</span> {date}
             </div>
           </div>
           <div className="apod-header_right">
