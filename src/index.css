@@ -86,4 +86,12 @@ button.apod-card:hover {
   .apod-container {
     margin: auto 1rem 1rem 1rem;
   }
+
+  .apod-header_left {
+    order: 2;
+  }
+
+  .apod-header_right {
+    order: 1;
+  }
 }
