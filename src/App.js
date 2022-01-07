@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+
+import { getApod } from "./services/apodService";
+
+import Header from "./containers/Header";
+import Apod from "./containers/Apod";
 
 function App() {
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [notAvailable, setNotAvailable] = useState(false);
+  useEffect(() => {
+    getApod().then((response) => {
+      if (response.data.media_type !== "image") {
+        setNotAvailable(true);
+        return;
+      }
+      setData(response.data);
+      setLoading(false);
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header />
+      {loading || notAvailable ? (
+        <div style={{ textAlign: "center" }}>
+          {notAvailable
+            ? "APOD is not available for today, check again later"
+            : "Loading..."}
+        </div>
+      ) : (
+        <Apod
+          title={data.title}
+          thumbnail={data.hdurl || data.url}
+          copyright={data.copyright}
+          date={data.date.replaceAll("-", ".")}
+          explanation={data.explanation}
+        />
+      )}
+    </>
   );
 }
 
