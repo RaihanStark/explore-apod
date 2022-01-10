@@ -5,17 +5,36 @@ function Apod({
   copyright,
   date,
   explanation,
+  mediaType,
   refreshApodHandler,
 }) {
   const downloadHandler = () => {
     window.open(imageHd, "_blank"); //to open new page
   };
 
+  const displayHero = () => {
+    if (mediaType === "video") {
+      return (
+        <div className="video-container">
+          <iframe src={thumbnail} title={title} frameborder="0"></iframe>
+        </div>
+      );
+    } else {
+      return <img className="apod-image" src={thumbnail} alt="apod title" />;
+    }
+  };
+
   return (
     <div className="apod-container">
       <div className="apod-thumbnail">
-        <img className="apod-image" src={thumbnail} alt="apod title" />
-        <div className="apod-title">{title}</div>
+        {displayHero()}
+        <div
+          className={`apod-title ${
+            mediaType === "video" ? "apod-video" : null
+          }`}
+        >
+          {title}
+        </div>
       </div>
       <div className="apod-info">
         <div className="apod-header">

@@ -12,10 +12,6 @@ function App() {
 
   useEffect(() => {
     getApod().then((apodData) => {
-      if (apodData.media_type !== "image") {
-        setNotAvailable(true);
-        return;
-      }
       setData(apodData);
       setLoading(false);
     });
@@ -36,6 +32,7 @@ function App() {
   return (
     <>
       <Header />
+
       {loading || notAvailable ? (
         <div style={{ textAlign: "center" }}>
           {notAvailable
@@ -50,6 +47,7 @@ function App() {
           copyright={data.copyright || "NASA"}
           date={data.date.replaceAll("-", ".")}
           explanation={data.explanation}
+          mediaType={data.media_type}
           refreshApodHandler={refreshApodHandler}
         />
       )}
